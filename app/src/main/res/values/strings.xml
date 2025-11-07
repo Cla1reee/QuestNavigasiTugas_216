@@ -8,6 +8,7 @@
     <string name="List_Daftar_Peserta">List Daftar Peserta</string>
     <string name="nama_lengkap">NAMA LENGKAP</string>
     <string name="jenis_kelamin">JENIS KELAMIN</string>
+    <string name="status_perkawinan">STATUS PERKAWINAN</string>
     <string name="alamat">ALAMAT</string>
     <string name="home">Form Isian</string>
     <string name="Formulir_Pendaftaran">Formulir Pendaftaran</string>
