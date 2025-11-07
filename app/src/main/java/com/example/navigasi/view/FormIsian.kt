@@ -1,6 +1,7 @@
 package com.example.navigasi.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,8 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
@@ -31,7 +34,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun FormulirPendaftaran(modifier: Modifier = Modifier) {
+fun FormulirPendaftaran(
+    onSubmitButtonClicked: () -> Unit,
+    onBackButtonClicked: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     var textNama by remember { mutableStateOf("") }
     var textAlamat by remember { mutableStateOf("") }
     var textJK by remember { mutableStateOf("") }
@@ -39,12 +46,14 @@ fun FormulirPendaftaran(modifier: Modifier = Modifier) {
 
     val listJenisKelamin: List<String> = listOf("Laki-laki", "Perempuan")
     val listStatus: List<String> = listOf("Janda", "Lajang", "Duda")
+    val darkColor = Color.Black
+    val lightColor = Color(0xFFF5F5F5) // Light gray
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize().background(lightColor)) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFF8A2BE2)) // Warna Ungu (BlueViolet)
+                .background(darkColor)
                 .padding(vertical = 24.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -56,10 +65,11 @@ fun FormulirPendaftaran(modifier: Modifier = Modifier) {
             )
         }
 
-
+        // Scrollable content
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
                 .padding(horizontal = 24.dp, vertical = 20.dp),
             horizontalAlignment = Alignment.Start
         ) {
@@ -72,7 +82,7 @@ fun FormulirPendaftaran(modifier: Modifier = Modifier) {
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF8A2BE2),
+                    focusedBorderColor = darkColor,
                     unfocusedBorderColor = Color.LightGray
                 )
             )
@@ -126,20 +136,36 @@ fun FormulirPendaftaran(modifier: Modifier = Modifier) {
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF8A2BE2),
+                    focusedBorderColor = darkColor,
                     unfocusedBorderColor = Color.LightGray
                 )
             )
+        }
 
-            Spacer(modifier = Modifier.weight(1f))
-
+        // Buttons at the bottom
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp, vertical = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
             Button(
-                onClick = { },
+                onClick = onBackButtonClicked,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .weight(1f)
                     .height(50.dp),
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
+                shape = RoundedCornerShape(20.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+            ) {
+                Text(text = "Back", color = Color.White, fontSize = 16.sp)
+            }
+            Button(
+                onClick = onSubmitButtonClicked,
+                modifier = Modifier
+                    .weight(1f)
+                    .height(50.dp),
+                shape = RoundedCornerShape(20.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = darkColor)
             ) {
                 Text(text = "Submit", color = Color.White, fontSize = 16.sp)
             }
@@ -151,5 +177,5 @@ fun FormulirPendaftaran(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun FormulirPendaftaranPreview() {
-    FormulirPendaftaran()
+    FormulirPendaftaran(onSubmitButtonClicked = {}, onBackButtonClicked = {})
 }
